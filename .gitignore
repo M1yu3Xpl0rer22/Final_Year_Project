@@ -1,0 +1,21 @@
+# Binaries
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Large tools
+nuclei.exe
+
+# Python/Environment
+__pycache__/
+*.pyc
+.env
+venv/
+.venv/
+.vscode/
+.idea/
+
+# Flask/Temporary
+instance/
+.pytest_cache/

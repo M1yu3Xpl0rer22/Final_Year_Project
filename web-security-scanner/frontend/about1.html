@@ -1,0 +1,104 @@
+<section class="team">
+  <div class="team-container">
+    <h2 class="team-title">Meet The Team</h2>
+    <div class="team-grid">
+      
+      <!-- Member 1 -->
+      <div class="team-member">
+        <img src="images/mayur.jpg" alt="Mayur Sapkale" class="team-photo">
+        <h3 class="team-name">Mayur Sapkale</h3>
+        <p class="team-role">Lead Developer</p>
+        <p class="team-desc">Full-stack + Security • Handles architecture, backend & integration.</p>
+      </div>
+
+      <!-- Member 2 -->
+      <div class="team-member">
+        <img src="images/member2.jpg" alt="Member 2" class="team-photo">
+        <h3 class="team-name">[Name Here]</h3>
+        <p class="team-role">Frontend Developer</p>
+        <p class="team-desc">Designs UI/UX with project theme & smooth interactions.</p>
+      </div>
+
+      <!-- Member 3 -->
+      <div class="team-member">
+        <img src="images/member3.jpg" alt="Member 3" class="team-photo">
+        <h3 class="team-name">[Name Here]</h3>
+        <p class="team-role">Tester & UAT</p>
+        <p class="team-desc">Handles bug checks, quality assurance, and reports.</p>
+      </div>
+
+      <!-- Member 4 -->
+      <div class="team-member">
+        <img src="images/member4.jpg" alt="Member 4" class="team-photo">
+        <h3 class="team-name">[Name Here]</h3>
+        <p class="team-role">Documentation & Deployment</p>
+        <p class="team-desc">Prepares reports, manages hosting & deployment on cloud.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<style>
+.team {
+  padding: 5rem 2rem;
+  background: var(--bg);
+  color: var(--text);
+  text-align: center;
+}
+
+.team-title {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--primary);
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.team-member {
+  background: var(--card);
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.team-member:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+}
+
+.team-photo {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  margin-bottom: 1rem;
+  object-fit: cover;
+  border: 3px solid var(--primary);
+}
+
+.team-name {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+.team-role {
+  font-size: 0.9rem;
+  color: var(--primary);
+  font-weight: 500;
+  margin-bottom: 0.75rem;
+}
+
+.team-desc {
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+</style>

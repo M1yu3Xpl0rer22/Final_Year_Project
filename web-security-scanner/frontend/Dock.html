@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ShieldByte | Documentation</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="owasp.html">OWASP Top 10</a>
+        <a href="scan.html">Security Scan</a>
+        <a href="about.html">About</a>
+        <a href="Dock.html" class="active">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="sing-in.html" class="btn btn-outline">Sign In</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding: 6rem 0 4rem; min-height: auto;">
+    <div class="container animate-fade-in">
+      <h1>ShieldByte <span class="text-gradient">Docs</span></h1>
+      <p class="subtitle">
+        Everything you need to know about using the ShieldByte vulnerability scanner to secure your web applications.
+      </p>
+    </div>
+  </header>
+
+  <div class="container" style="padding-bottom: 6rem;">
+    <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+      <div style="margin-bottom: 3rem;">
+        <h2 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">1. Getting Started</h2>
+        <p style="color: var(--text-muted); font-size: 1.1rem;">
+          Navigate to the <a href="scan.html" style="color: var(--primary); text-decoration: underline;">Scan Page</a>,
+          enter a valid website URL, and click <strong>Start Scan</strong>. Our engine will automatically analyze the
+          input against OWASP Top 10 vulnerabilities.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 3rem;">
+        <h2 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">2. CLI Usage (Advanced)</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">For automated testing in CI/CD pipelines, use our CLI
+          tool:</p>
+        <div class="code-window">
+          <div class="window-header">
+            <div class="dot red"></div>
+            <div class="dot yellow"></div>
+            <div class="dot green"></div>
+          </div>
+          <pre>$ shieldbyte --scan https://yourdomain.com --output report.html</pre>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 3rem;">
+        <h2 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">3. Understanding Reports</h2>
+        <p style="color: var(--text-muted); margin-bottom: 1rem;">The scan report provides detailed insights into found
+          vulnerabilities:</p>
+        <div
+          style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1.5rem; margin-top: 1.5rem;">
+          <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+            <icon style="font-size: 2rem; color: var(--danger); margin-bottom: 1rem;">⚠️</icon>
+            <h4 style="margin-bottom: 0.5rem;">Risk Level</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Critical, High, Medium, Low severity classification.
+            </p>
+          </div>
+          <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+            <icon style="font-size: 2rem; color: var(--accent); margin-bottom: 1rem;">🎯</icon>
+            <h4 style="margin-bottom: 0.5rem;">Affected Area</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Specific endpoints or parameters.</p>
+          </div>
+          <div class="glass-panel" style="padding: 1.5rem; text-align: center;">
+            <icon style="font-size: 2rem; color: var(--primary); margin-bottom: 1rem;">🛡️</icon>
+            <h4 style="margin-bottom: 0.5rem;">Fix Guidance</h4>
+            <p style="font-size: 0.9rem; color: var(--text-muted);">Step-by-step remediation instructions.</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-bottom: 3rem;">
+        <h2 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">4. Technology Stack</h2>
+        <p style="color: var(--text-muted);">
+          ShieldByte leverages industry-standard open-source tools including <strong>OWASP ZAP</strong> and
+          <strong>sqlmap</strong>, combined with our proprietary AI-driven analysis engine to reduce false positives.
+        </p>
+      </div>
+
+      <div>
+        <h2 style="color: var(--primary); font-size: 1.75rem; margin-bottom: 1rem;">5. Support</h2>
+        <p style="color: var(--text-muted);">
+          Need help? Contact our security research team at <a href="mailto:support@shieldbyte.io"
+            style="color: var(--primary);">support@shieldbyte.io</a>.
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <a href="#" class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon" style="width: 28px; height: 28px; font-size: 1.2rem;">⚡</div>
+            ShieldByte
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Securing the modern web with intelligent, open-source vulnerability detection.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#">Features</a>
+          <a href="#">Integrations</a>
+          <a href="#">Security</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="owasp.html">OWASP Top 10</a>
+          <a href="Dock.html">Documentation</a>
+          <a href="#">API Reference</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="css/theme-toggle.js"></script>
+</body>
+
+</html>

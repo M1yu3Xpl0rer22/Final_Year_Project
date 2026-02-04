@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Insecure Design - ShieldByte</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 4rem; padding-bottom: 6rem;">
+    <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 2.5rem;">Insecure Design</h1>
+        <span
+          style="background: #eab308; color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">MEDIUM
+          SEVERITY</span>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+        <strong>Insecure Design</strong> is a broad category representing flaws in architectural structure. It differs
+        from insecure implementation: a perfect implementation of an insecure design is still insecure. This includes
+        lack of threat modeling, insufficient secure design patterns, and failing to plan for security.
+      </p>
+
+      <div style="margin: 3rem 0; text-align: center;">
+        <img src="asset/4.png" alt="Insecure Design Illustration"
+          style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+
+        <div>
+          <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">🔍 What Does It Look Like?</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1rem;">
+            A "recover password" feature that asks for "Questions and Answers" which are easily researchable on social
+            media (e.g., "Mother's maiden name"). This is a design flaw in the authentication flow.
+          </p>
+        </div>
+
+        <div>
+          <h2 style="color: var(--danger); font-size: 1.5rem; margin-bottom: 1rem;">🚨 Why It's Dangerous</h2>
+          <ul style="color: var(--text-muted); line-height: 2; list-style-position: inside;">
+            <li>Foundational flaws cannot be "patched" with code fixes</li>
+            <li>Requires architectural changes which are expensive</li>
+            <li>Can lead to business logic abuse</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 1.5rem;">✅ How to Prevent It</h2>
+        <div class="glass-panel"
+          style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--accent); padding: 2rem;">
+          <ul style="color: var(--text-main); line-height: 1.8; list-style: none; padding: 0;">
+            <li style="margin-bottom: 0.5rem;">✓ Establish a secure development lifecycle with **Threat Modeling**.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Use secure design patterns and reference architectures.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Write unit and integration tests to validate critical flows.</li>
+            <li>✓ Limit resource consumption by design (rate limiting).</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="../css/theme-toggle.js"></script>
+</body>
+
+</html>

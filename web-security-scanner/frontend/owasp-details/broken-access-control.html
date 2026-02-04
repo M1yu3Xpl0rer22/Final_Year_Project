@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Broken Access Control - ShieldByte</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 4rem; padding-bottom: 6rem;">
+    <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 2.5rem;">Broken Access Control</h1>
+        <span
+          style="background: var(--danger); color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">HIGH
+          SEVERITY</span>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+        <strong>Broken Access Control</strong> happens when an application doesn't properly restrict what users can do
+        or see. It means users might gain access to data or actions that should be off-limits to them — like viewing
+        another user’s account details or deleting data they shouldn’t be able to.
+      </p>
+
+      <div style="margin: 3rem 0; text-align: center;">
+        <img src="asset/1.png" alt="Access Control Illustration"
+          style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+
+        <div>
+          <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">🔍 What Does It Look Like?</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1rem;">Imagine you're logged in as a regular user, but by
+            changing the URL from:</p>
+          <div class="code-window" style="margin-bottom: 1rem;">
+            <pre style="padding: 1rem;">https://shieldbyte.com/user/view?id=101</pre>
+          </div>
+          <p style="color: var(--text-muted); margin-bottom: 1rem;">to</p>
+          <div class="code-window" style="margin-bottom: 1rem;">
+            <pre style="padding: 1rem;">https://shieldbyte.com/user/view?id=102</pre>
+          </div>
+          <p style="color: var(--text-muted);">you can see someone else's private data.</p>
+        </div>
+
+        <div>
+          <h2 style="color: var(--danger); font-size: 1.5rem; margin-bottom: 1rem;">🚨 Why It's Dangerous</h2>
+          <ul style="color: var(--text-muted); line-height: 2; list-style-position: inside;">
+            <li>Leads to unauthorized data leaks</li>
+            <li>Users can modify or delete sensitive info</li>
+            <li>May result in full account takeover</li>
+            <li>Violation of privacy compliance (GDPR, CCPA)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 1.5rem;">✅ How to Prevent It</h2>
+        <div class="glass-panel"
+          style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--accent); padding: 2rem;">
+          <ul style="color: var(--text-main); line-height: 1.8; list-style: none; padding: 0;">
+            <li style="margin-bottom: 0.5rem;">✓ Always check permissions on the server side — never trust hidden fields
+              alone.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Use proper roles (admin, user, guest) and enforce them in middleware.
+            </li>
+            <li style="margin-bottom: 0.5rem;">✓ Deny access by default (minimize attack surface).</li>
+            <li>✓ Log access violations and alert admins immediately.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1.5rem;">💡 Example in Code</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div>
+            <p style="color: var(--danger); margin-bottom: 0.5rem; font-weight: 600;">❌ Insecure:</p>
+            <div class="code-window">
+              <pre>if (request.user) { 
+  showData(request.id); 
+}</pre>
+            </div>
+          </div>
+          <div>
+            <p style="color: var(--accent); margin-bottom: 0.5rem; font-weight: 600;">✅ Secure:</p>
+            <div class="code-window">
+              <pre>if (request.user.id === request.id || 
+    request.user.role === 'admin') { 
+  showData(request.id); 
+}</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="../css/theme-toggle.js"></script>
+</body>
+
+</html>

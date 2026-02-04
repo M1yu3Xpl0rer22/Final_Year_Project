@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OWASP Top 10 - ShieldByte</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="owasp.html" class="active">OWASP Top 10</a>
+        <a href="scan.html">Security Scan</a>
+        <a href="about.html">About</a>
+        <a href="Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="sing-in.html" class="btn btn-outline">Sign In</a>
+      </div>
+    </div>
+  </nav>
+
+  <header class="hero" style="padding: 6rem 0 4rem; min-height: auto;">
+    <div class="container animate-fade-in">
+      <h1>OWASP <span class="text-gradient">Top 10</span> (2025)</h1>
+      <p class="subtitle">
+        The standard awareness document for developers and web application security. ShieldByte protects against these
+        critical risks.
+      </p>
+    </div>
+  </header>
+
+  <div class="container" style="padding-bottom: 6rem;">
+    <div class="features-grid" style="grid-template-columns: 1fr; gap: 1.5rem;">
+
+      <a href="owasp-details/broken-access-control.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A01: Broken Access Control</h3>
+          <span
+            style="background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">HIGH</span>
+        </div>
+        <p>Restrictions on what authenticated users can do are not properly enforced. Attackers can access unauthorized
+          functionality and data.</p>
+      </a>
+
+      <a href="owasp-details/cryptographic-failures.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A02: Cryptographic Failures</h3>
+          <span
+            style="background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">HIGH</span>
+        </div>
+        <p>Failures related to cryptography (formerly Sensitive Data Exposure), which often leads to sensitive data
+          exposure or system compromise.</p>
+      </a>
+
+      <a href="owasp-details/injection.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A03: Injection</h3>
+          <span
+            style="background: #be123c; color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">CRITICAL</span>
+        </div>
+        <p>User-supplied data is not validated, filtered, or sanitized. Common types include SQL, NoSQL, OS command, and
+          LDAP injection.</p>
+      </a>
+
+      <a href="owasp-details/insecure-design.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A04: Insecure Design</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>Focuses on risks related to design flaws. A secure implementation cannot fix an insecure design.</p>
+      </a>
+
+      <a href="owasp-details/security-misconfiguration.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A05: Security Misconfiguration</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>Security settings are defined, implemented, and maintained with default values, incomplete configurations, or
+          open cloud storage.</p>
+      </a>
+
+      <a href="owasp-details/vulnerable-components.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A06: Vulnerable Components</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>Using components with known vulnerabilities (such as libraries, frameworks, and other software modules).</p>
+      </a>
+
+      <a href="owasp-details/authentication-failures.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A07: Identification Failures</h3>
+          <span
+            style="background: var(--danger); color: white; padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">HIGH</span>
+        </div>
+        <p>Previously broken authentication. Confirmation of user's identity, authentication, and session management are
+          critical.</p>
+      </a>
+
+      <a href="owasp-details/software-integrity.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A08: Software & Data Integrity</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>Focuses on making assumptions related to software updates, critical data, and CI/CD pipelines without
+          verifying integrity.</p>
+      </a>
+
+      <a href="owasp-details/logging-monitoring.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A09: Logging & Monitoring Failures</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>Insufficient logging and monitoring allow attackers to maintain persistent access and avoid detection.</p>
+      </a>
+
+      <a href="owasp-details/ssrf.html" class="feature-card"
+        style="display: block; padding: 2rem; text-decoration: none; cursor: pointer;">
+        <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 0.5rem;">
+          <h3 style="margin: 0; font-size: 1.25rem;">A10: Server-Side Request Forgery</h3>
+          <span
+            style="background: var(--primary); color: var(--text-inverse); padding: 0.25rem 0.75rem; border-radius: 20px; font-size: 0.75rem; font-weight: 600;">MEDIUM</span>
+        </div>
+        <p>SSRF flaws occur whenever a web application is fetching a remote resource without validating the
+          user-supplied URL.</p>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <a href="#" class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon" style="width: 28px; height: 28px; font-size: 1.2rem;">⚡</div>
+            ShieldByte
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Securing the modern web with intelligent, open-source vulnerability detection.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#">Features</a>
+          <a href="#">Integrations</a>
+          <a href="#">Security</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="owasp.html">OWASP Top 10</a>
+          <a href="Dock.html">Documentation</a>
+          <a href="#">API Reference</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="css/theme-toggle.js"></script>
+</body>
+
+</html>

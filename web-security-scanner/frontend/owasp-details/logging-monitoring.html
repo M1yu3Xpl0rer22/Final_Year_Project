@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Logging and Monitoring Failures - ShieldByte</title>
+    <link rel="stylesheet" href="../css/theme.css">
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+      <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+    <div class="container" style="padding-top: 4rem; padding-bottom: 6rem;">
+        <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+            <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+                <h1 style="margin: 0; font-size: 2.5rem;">Logging & Monitoring Failures</h1>
+                <span
+                    style="background: #eab308; color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">MEDIUM
+                    SEVERITY</span>
+            </div>
+
+            <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+                <strong>Security Logging and Monitoring Failures</strong> occur when applications do not record
+                security-critical events or fail to alert on them. Without adequate logging and monitoring, breaches may
+                go undetected for days or months, making it impossible to stop attackers or determine the extent of the
+                damage.
+            </p>
+
+            <div style="margin: 3rem 0; text-align: center;">
+                <img src="asset/9.png" alt="Logging Failures Illustration"
+                    style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);">
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+
+                <div>
+                    <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">🔍 What Does It Look
+                        Like?</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 1rem;">An API returning "403 Forbidden" 1,000
+                        times in a minute for a single IP, but no alert is triggered.</p>
+                    <div class="code-window" style="margin-bottom: 1rem;">
+                        <pre style="padding: 1rem;">// Silent failure
+if (login_failed) {
+  return error; // No log created
+}</pre>
+                    </div>
+                    <p style="color: var(--text-muted);">The attackers can brute-force indefinitely without being
+                        blocked.</p>
+                </div>
+
+                <div>
+                    <h2 style="color: var(--danger); font-size: 1.5rem; margin-bottom: 1rem;">🚨 Why It's Dangerous</h2>
+                    <ul style="color: var(--text-muted); line-height: 2; list-style-position: inside;">
+                        <li>Attackers dwell in systems undetected</li>
+                        <li>Impossible to perform forensics after a breach</li>
+                        <li>Regulatory non-compliance (PCI-DSS, HIPAA)</li>
+                        <li>Inability to identify active threats</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h2 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 1.5rem;">✅ How to Prevent It</h2>
+                <div class="glass-panel"
+                    style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--accent); padding: 2rem;">
+                    <ul style="color: var(--text-main); line-height: 1.8; list-style: none; padding: 0;">
+                        <li style="margin-bottom: 0.5rem;">✓ Log all login failures, access control failures, and
+                            server-side input validation errors.</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Ensure logs contain context (User ID, IP, Timestamp) but NO
+                            sensitive data.</li>
+                        <li style="margin-bottom: 0.5rem;">✓ Use centralized log management (SIEM) solutions.</li>
+                        <li>✓ Establish effective monitoring and alerting thresholds.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 4rem;">
+                <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1.5rem;">💡 Secure Logging</h2>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                    <div>
+                        <p style="color: var(--danger); margin-bottom: 0.5rem; font-weight: 600;">❌ Insecure:</p>
+                        <div class="code-window">
+                            <pre>console.log("Error occurred");</pre>
+                        </div>
+                    </div>
+                    <div>
+                        <p style="color: var(--accent); margin-bottom: 0.5rem; font-weight: 600;">✅ Secure:</p>
+                        <div class="code-window">
+                            <pre>logger.warn("Auth failed", {
+  user: "admin", 
+  ip: "192.168.1.5",
+  event: "BRUTE_FORCE_ATTEMPT"
+});</pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2026 ShieldByte Security Inc. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+
+  <script src="../css/theme-toggle.js"></script>
+</body>
+
+</html>

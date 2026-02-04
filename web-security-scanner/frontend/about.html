@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us | ShieldByte</title>
+  <link rel="stylesheet" href="css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+</head>
+
+<body>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="owasp.html">OWASP</a>
+        <a href="scan.html">Scan</a>
+        <a href="Dock.html">Docs</a>
+        <a href="about.html" class="active">About</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="sing-in.html" class="btn btn-outline">Sign In</a>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero" style="padding: 6rem 0 4rem;">
+    <div class="container animate-fade-in">
+      <h1>Meet the <span class="text-gradient">Team</span></h1>
+      <p class="subtitle">
+        The passionate minds behind ShieldByte dedicated to making the web more secure.
+      </p>
+    </div>
+  </section>
+
+  <div class="container" style="padding-bottom: 6rem;">
+    <!-- Team Grid -->
+    <div class="features-grid" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
+
+      <!-- Member 1: Mayur -->
+      <div class="glass-panel animate-fade-in" style="padding: 2rem; text-align: center; animation-delay: 0.1s;">
+        <img src="https://avatars.githubusercontent.com/u/99153031?v=4" alt="Mayur Sapkale"
+          style="width: 120px; height: 120px; border-radius: 50%; border: 3px solid var(--primary); margin-bottom: 1.5rem; object-fit: cover;">
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Mayur Sapkale</h3>
+        <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">Full Stack Developer
+        </p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Specializing in web security, bug bounty hunting, and AI integration.
+        </p>
+        <div class="social-icons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="https://github.com/mayur29" target="_blank" style="color: var(--text-muted); font-size: 1.2rem;"><i
+              class="fab fa-github"></i></a>
+          <a href="https://linkedin.com/in/mayur29" target="_blank"
+            style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-linkedin-in"></i></a>
+          <a href="mailto:mayursapkale29@gmail.com" style="color: var(--text-muted); font-size: 1.2rem;"><i
+              class="fas fa-envelope"></i></a>
+        </div>
+      </div>
+
+      <!-- Member 2: Placeholder -->
+      <div class="glass-panel animate-fade-in" style="padding: 2rem; text-align: center; animation-delay: 0.2s;">
+        <div
+          style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 3px solid var(--border);">
+          <span style="font-size: 2rem; color: var(--text-muted);">👤</span>
+        </div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Team Member 2</h3>
+        <p style="color: var(--secondary); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">Role / Title</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Description of expertise and contributions to the project.
+        </p>
+        <div class="social-icons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Member 3: Placeholder -->
+      <div class="glass-panel animate-fade-in" style="padding: 2rem; text-align: center; animation-delay: 0.3s;">
+        <div
+          style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 3px solid var(--border);">
+          <span style="font-size: 2rem; color: var(--text-muted);">👤</span>
+        </div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Team Member 3</h3>
+        <p style="color: var(--accent); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">Role / Title</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Description of expertise and contributions to the project.
+        </p>
+        <div class="social-icons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+      <!-- Member 4: Placeholder -->
+      <div class="glass-panel animate-fade-in" style="padding: 2rem; text-align: center; animation-delay: 0.4s;">
+        <div
+          style="width: 120px; height: 120px; margin: 0 auto 1.5rem; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; border: 3px solid var(--border);">
+          <span style="font-size: 2rem; color: var(--text-muted);">👤</span>
+        </div>
+        <h3 style="font-size: 1.5rem; margin-bottom: 0.5rem;">Team Member 4</h3>
+        <p style="color: var(--primary); font-size: 0.9rem; margin-bottom: 1rem; font-weight: 600;">Role / Title</p>
+        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+          Description of expertise and contributions to the project.
+        </p>
+        <div class="social-icons" style="display: flex; justify-content: center; gap: 1rem;">
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-github"></i></a>
+          <a href="#" style="color: var(--text-muted); font-size: 1.2rem;"><i class="fab fa-linkedin-in"></i></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-container">
+      <div class="footer-content">
+        <div class="footer-col">
+          <a href="#" class="logo" style="margin-bottom: 1rem;">
+            <div class="logo-icon" style="width: 28px; height: 28px; font-size: 1.2rem;">⚡</div>
+            ShieldByte
+          </a>
+          <p style="color: var(--text-muted); font-size: 0.9rem;">
+            Securing the modern web with intelligent, open-source vulnerability detection.
+          </p>
+        </div>
+
+        <div class="footer-col">
+          <h4>Product</h4>
+          <a href="#">Features</a>
+          <a href="#">Integrations</a>
+          <a href="#">Security</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Resources</h4>
+          <a href="owasp.html">OWASP Top 10</a>
+          <a href="Dock.html">Documentation</a>
+          <a href="#">API Reference</a>
+        </div>
+
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="about.html">About Us</a>
+          <a href="#">Careers</a>
+          <a href="#">Contact</a>
+        </div>
+      </div>
+
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+  <script src="css/theme-toggle.js"></script>
+</body>
+
+</html>

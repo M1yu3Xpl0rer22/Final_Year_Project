@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Software and Data Integrity Failures - ShieldByte</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 4rem; padding-bottom: 6rem;">
+    <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 2.5rem;">Software Integrity Failures</h1>
+        <span
+          style="background: #eab308; color: black; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">MEDIUM
+          SEVERITY</span>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+        <strong>Software and Data Integrity Failures</strong> relate to code and infrastructure that does not protect
+        against integrity violations. This happens when you use software from untrusted sources or your CI/CD pipeline
+        is compromised, allowing attackers to inject malicious code into your deployment process.
+      </p>
+
+      <div style="margin: 3rem 0; text-align: center;">
+        <img src="asset/integrity-failures.png" alt="Software Integrity Failures Illustration"
+          style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+
+        <div>
+          <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">🔍 What Does It Look Like?</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1rem;">Downloading a plugin without checksum verification:
+          </p>
+          <div class="code-window" style="margin-bottom: 1rem;">
+            <pre style="padding: 1rem;">wget http://untrusted-site.com/plugin.js</pre>
+          </div>
+          <p style="color: var(--text-muted);">The file could be tampered with in transit or on the source server to
+            include a backdoor.</p>
+        </div>
+
+        <div>
+          <h2 style="color: var(--danger); font-size: 1.5rem; margin-bottom: 1rem;">🚨 Why It's Dangerous</h2>
+          <ul style="color: var(--text-muted); line-height: 2; list-style-position: inside;">
+            <li>Supply Chain Attacks (e.g., SolarWinds)</li>
+            <li>Deployment of malicious code to all users</li>
+            <li>Compromised update mechanisms</li>
+            <li>Extremely hard to detect once deployed</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 1.5rem;">✅ How to Prevent It</h2>
+        <div class="glass-panel"
+          style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--accent); padding: 2rem;">
+          <ul style="color: var(--text-main); line-height: 1.8; list-style: none; padding: 0;">
+            <li style="margin-bottom: 0.5rem;">✓ Verify digital signatures or checksums of all software components.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Use trusted repositories (e.g., Maven Central, npm) with MFA enabled.
+            </li>
+            <li style="margin-bottom: 0.5rem;">✓ Secure your CI/CD pipeline and limit access.</li>
+            <li>✓ Ensure specific versions are locked (pinned) in your dependency files.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1.5rem;">💡 Secure Verification</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div>
+            <p style="color: var(--danger); margin-bottom: 0.5rem; font-weight: 600;">❌ Insecure:</p>
+            <div class="code-window">
+              <pre>curl -O http://site.com/app.tar.gz
+tar -xzf app.tar.gz</pre>
+            </div>
+          </div>
+          <div>
+            <p style="color: var(--accent); margin-bottom: 0.5rem; font-weight: 600;">✅ Secure:</p>
+            <div class="code-window">
+              <pre>curl -O https://site.com/app.tar.gz
+sha256sum -c app.sha256</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="../css/theme-toggle.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Injection - ShieldByte</title>
+  <link rel="stylesheet" href="../css/theme.css">
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+
+    <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container" style="padding-top: 4rem; padding-bottom: 6rem;">
+    <div class="glass-panel animate-fade-in" style="padding: 3rem;">
+
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 2rem;">
+        <h1 style="margin: 0; font-size: 2.5rem;">Injection</h1>
+        <span
+          style="background: #be123c; color: white; padding: 0.5rem 1rem; border-radius: 20px; font-size: 0.85rem; font-weight: 600;">CRITICAL
+          SEVERITY</span>
+      </div>
+
+      <p style="color: var(--text-muted); font-size: 1.1rem; line-height: 1.8; margin-bottom: 2rem;">
+        <strong>Injection attacks</strong> occur when untrusted data is sent to an interpreter (SQL, NoSQL, LDAP, OS) as
+        part of a command or query. The attacker's hostile data can trick the interpreter into executing unintended
+        commands or accessing data without proper authorization.
+      </p>
+
+      <div style="margin: 3rem 0; text-align: center;">
+        <img src="asset/3.png" alt="Injection Attack Illustration"
+          style="max-width: 100%; border-radius: 12px; border: 1px solid var(--border); box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);">
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; margin-top: 3rem;">
+
+        <div>
+          <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1rem;">🔍 The Classic Example</h2>
+          <p style="color: var(--text-muted); margin-bottom: 1rem;">A login bypass using SQL Injection:</p>
+          <div class="code-window" style="margin-bottom: 1rem;">
+            <pre style="padding: 1rem;">SELECT * FROM users 
+WHERE user = 'admin' 
+AND pass = '' OR '1'='1'</pre>
+          </div>
+          <p style="color: var(--text-muted);">Because <code>'1'='1'</code> is always true, the database returns a
+            record, logging the attacker in as admin.</p>
+        </div>
+
+        <div>
+          <h2 style="color: var(--danger); font-size: 1.5rem; margin-bottom: 1rem;">🚨 Why It's Dangerous</h2>
+          <ul style="color: var(--text-muted); line-height: 2; list-style-position: inside;">
+            <li>Full database disclosure or loss</li>
+            <li>Authentication bypass</li>
+            <li>Remote Code Execution (RCE) in OS injection</li>
+            <li>High business impact and reputation damage</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--accent); font-size: 1.5rem; margin-bottom: 1.5rem;">✅ How to Prevent It</h2>
+        <div class="glass-panel"
+          style="background: rgba(16, 185, 129, 0.05); border: 1px solid var(--accent); padding: 2rem;">
+          <ul style="color: var(--text-main); line-height: 1.8; list-style: none; padding: 0;">
+            <li style="margin-bottom: 0.5rem;">✓ Use <strong>Parameterized Queries</strong> (Prepared Statements) for
+              all DB access.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Use ORMs (like Hibernate, Entity Framework) that handle escaping
+              automatically.</li>
+            <li style="margin-bottom: 0.5rem;">✓ Validate and sanitize input on the server side (allow-lists).</li>
+            <li>✓ Limit database permissions (principle of least privilege).</li>
+          </ul>
+        </div>
+      </div>
+
+      <div style="margin-top: 4rem;">
+        <h2 style="color: var(--primary); font-size: 1.5rem; margin-bottom: 1.5rem;">💡 Example Fix</h2>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+          <div>
+            <p style="color: var(--danger); margin-bottom: 0.5rem; font-weight: 600;">❌ Insecure:</p>
+            <div class="code-window">
+              <pre>"SELECT * FROM users WHERE user = '" + input + "'"</pre>
+            </div>
+          </div>
+          <div>
+            <p style="color: var(--accent); margin-bottom: 0.5rem; font-weight: 600;">✅ Secure:</p>
+            <div class="code-window">
+              <pre>db.query("SELECT * FROM users WHERE user = ?", [input])</pre>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="container">
+      <div class="copyright">
+        &copy; 2026 ShieldByte Security Inc. All rights reserved.
+      </div>
+    </div>
+  </footer>
+
+
+  <script src="../css/theme-toggle.js"></script>
+</body>
+
+</html>

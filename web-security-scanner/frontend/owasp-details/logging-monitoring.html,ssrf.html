@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Security Logging and Monitoring Failures - ShieldByte</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@500;700&display=swap" rel="stylesheet">
+  
+   <link rel="stylesheet" href="/Dark mode/theme.css">
+  <script src="/Dark mode/theme-toggle.js" defer></script>
+ 
+  
+  <style>
+    :root {
+      --primary: #2563eb;
+    }
+    body {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      background: #f8fafc;
+      color: #1f2937;
+      line-height: 1.6;
+      padding: 2rem;
+    }
+
+    h1, h2, h3 {
+      font-family: 'Poppins', sans-serif;
+      color: #2563eb;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: auto;
+      background: #fff;
+      padding: 2rem;
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    }
+
+    .center-image {
+      display: flex;
+      justify-content: center;
+      margin: 2rem 0;
+    }
+
+    .center-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 8px;
+    }
+
+    ul {
+      padding-left: 1.25rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    code {
+      background: #f1f5f9;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-family: 'JetBrains Mono', monospace;
+    }
+      .navbar {
+      background: var(--card, #ffffff);
+      padding: 0.75rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      font-size: 0.9rem;
+    }
+
+    .logo {
+      font-family: 'Poppins', sans-serif;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .nav-links a {
+      margin-left: 1rem;
+      text-decoration: none;
+      color: var(--text, #1f2937);
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary);
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: var(--primary);
+      left: 50%;
+      bottom: -4px;
+      transform: translateX(-50%);
+      transition: width 0.3s ease;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+</style>
+</head>
+<body>
+    <nav class="navbar">
+    <div class="container">
+      <a href="../index.html" class="logo">
+        <div class="logo-icon">⚡</div>
+        ShieldByte
+      </a>
+
+      <div class="nav-links">
+        <a href="../index.html">Home</a>
+        <a href="../owasp.html">OWASP Top 10</a>
+        <a href="../scan.html">Security Scan</a>
+        <a href="../about.html">About</a>
+        <a href="../Dock.html">Docs</a>
+        <button class="theme-toggle" onclick="toggleTheme()" title="Toggle Theme">🌙</button>
+        <a href="../sing-in.html" class="btn btn-outline">Sign In</a>
+        <a href="../create acc.html" class="btn btn-primary">Get Started</a>
+      </div>
+    </div>
+  </nav>
+
+<div<br> &nbsp;</div>
+
+
+  <div class="container">
+    <h1>Security Logging and Monitoring Failures</h1>
+    <p><strong>Security Logging and Monitoring Failures</strong> occur when applications fail to detect, escalate, and respond to active breaches. Without proper logging and monitoring, attackers can remain undetected in systems for extended periods, making incident response and forensic analysis nearly impossible.</p>
+
+    <div class="center-image">
+      <!-- Add your image below -->
+      <img src="/owasp-details/asset/9.png" alt="Logging and Monitoring Failures Illustration">
+    </div>
+
+    <h2>🔍 What Does It Look Like?</h2>
+    <p>Applications with minimal or no security logging:</p>
+    <code>// No logging for failed login attempts</code>
+    <p>Or logs that don't capture critical security events:</p>
+    <code>console.log("User logged in")</code>
+    <p>instead of detailed audit trails with timestamps, IP addresses, and user context.</p>
+
+    <h2>🚨 Why It's Dangerous</h2>
+    <ul>
+      <li>Attackers can operate undetected for months or years</li>
+      <li>Makes incident response and forensic analysis impossible</li>
+      <li>Prevents early detection of security breaches</li>
+      <li>Compliance violations and regulatory penalties</li>
+      <li>Unable to track attack patterns or improve defenses</li>
+    </ul>
+
+    <h2>✅ How to Prevent It</h2>
+    <ul>
+      <li>Log all authentication attempts, access control failures, and input validation failures</li>
+      <li>Implement real-time monitoring and alerting for suspicious activities</li>
+      <li>Use structured logging with proper timestamps and context</li>
+      <li>Establish log retention policies and secure log storage</li>
+      <li>Create incident response procedures based on log analysis</li>
+      <li>Regularly review and analyze security logs</li>
+    </ul>
+
+    <h2>💡 Example Implementation</h2>
+    <p>Instead of this (insufficient):</p>
+    <code>if (!authenticated) { return "Access denied"; }</code>
+    <p>Do this:</p>
+    <code>if (!authenticated) { securityLogger.warn("Failed login attempt", {ip, user, timestamp}); return "Access denied"; }</code>
+
+    <h2>📊 Monitoring Tools</h2>
+    <p>Implement centralized logging with:</p>
+    <code>ELK Stack (Elasticsearch, Logstash, Kibana)</code>
+    <p>or cloud solutions like:</p>
+    <code>AWS CloudTrail, Azure Monitor, Splunk</code>
+    <p>for comprehensive security monitoring and analysis.</p>
+
+    <h2>🛡 Critical Events to Log</h2>
+    <p>Always log failed authentication attempts, privilege escalations, data access patterns, configuration changes, and any security-related errors. Include user context, IP addresses, and detailed timestamps.</p>
+
+    <p>Effective logging and monitoring are your security team's eyes and ears. Without them, you're fighting cyber threats blindfolded!</p>
+  </div>
+</body>
+</html>
