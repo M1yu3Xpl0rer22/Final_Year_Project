@@ -113,6 +113,8 @@
   <script>
     let timerInterval;
     let startTime;
+    let currentScanId = null;
+    let pollInterval = null;
 
     function formatTime(ms) {
       const totalSeconds = Math.floor(ms / 1000);
@@ -146,7 +148,7 @@
       <div style="background: rgba(88, 129, 87, 0.05); padding: 1.5rem; border-radius: 8px; border: 1px dashed var(--primary);">
         <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem;">
           <div style="display: flex; align-items: center; gap: 1rem;">
-            <div style="width: 20px; height: 20px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
+            <div id="scanSpinner" style="width: 20px; height: 20px; border: 2px solid var(--primary); border-top-color: transparent; border-radius: 50%; animation: spin 1s linear infinite;"></div>
             <span style="color: var(--primary); font-weight: 500;">Scanning target: <span style="color: var(--text-main);">${url}</span></span>
           </div>
           <div style="font-family: monospace; color: var(--text-muted); font-size: 1.1rem; background: rgba(0,0,0,0.2); padding: 0.2rem 0.8rem; border-radius: 4px;">
@@ -154,12 +156,12 @@
           </div>
         </div>
 
-        <div class="pulse-container" style="text-align: center; margin: 2rem 0;">
-          <p class="pulse-text" style="font-size: 1.1rem; color: var(--text-main); font-weight: 500;">Please wait, system is analyzing...</p>
-          <div style="width: 100%; max-width: 300px; height: 4px; background: rgba(255,255,255,0.1); margin: 1rem auto; overflow: hidden; border-radius: 2px;">
+        <div id="pulseContainer" class="pulse-container" style="text-align: center; margin: 2rem 0;">
+          <p id="statusHeading" class="pulse-text" style="font-size: 1.1rem; color: var(--text-main); font-weight: 500;">Please wait, system is analyzing...</p>
+          <div id="progressBarWrapper" style="width: 100%; max-width: 300px; height: 4px; background: rgba(255,255,255,0.1); margin: 1rem auto; overflow: hidden; border-radius: 2px;">
             <div class="progress-bar-move" style="width: 30%; height: 100%; background: var(--primary);"></div>
           </div>
-          <p style="font-size: 0.85rem; color: var(--text-muted);">Running ZAP Spider, Active Scan, and Nmap Discovery.<br>This may take several minutes depending on the mode.</p>
+          <p id="statusSubtext" style="font-size: 0.85rem; color: var(--text-muted);">Running ZAP Spider, Active Scan, and Nmap Discovery.<br>This may take several minutes depending on the mode.</p>
         </div>
 
       </div>
@@ -183,100 +185,209 @@
           })
         });
 
-        clearInterval(timerInterval); // Stop timer
-
         if (!response.ok) {
           throw new Error(`Server returned ${response.status}: ${response.statusText}`);
         }
 
         const data = await response.json();
+        currentScanId = data.scan_id;
 
-        // 3. Display REAL Results
+        if (data.reused) {
+          const statusText = document.getElementById('statusHeading');
+          if (statusText) statusText.textContent = "✨ Results retrieved from recent scan history.";
+          const statusSubtext = document.getElementById('statusSubtext');
+          if (statusSubtext) statusSubtext.textContent = "This URL was scanned less than 24 hours ago.";
 
-        // --- NMAP RESULTS ---
-        let nmapHtml = '';
-        if (data.nmap && data.nmap.length > 0) {
-          nmapHtml += `<h4 style="margin-top: 1.5rem; color: var(--secondary); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Network Discovery (Nmap on Port ${data.nmap[0].port || '...'})</h4>`;
-          nmapHtml += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">`;
-
-          data.nmap.forEach(port => {
-            nmapHtml += `
-                <div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 4px; border: 1px solid var(--border);">
-                    <div style="color: var(--primary); font-weight: bold;">Port ${port.port}</div>
-                    <div style="color: var(--text-muted); font-size: 0.9rem;">${port.service}</div>
-                    <div style="color: var(--text-main); font-size: 0.8rem; margin-top: 0.2rem;">${port.version}</div>
-                </div>`;
-          });
-          nmapHtml += `</div>`;
+          // Poll once immediately to fill UI
+          pollStatus(currentScanId);
         } else {
-          nmapHtml = `<div style="margin-top: 1rem; color: var(--text-muted);">No open ports found or Nmap scan failed.</div>`;
+          // Update header with Scan ID
+          resultDiv.querySelector('span[style*="color: var(--text-main)"]').textContent = url + " (ID: " + currentScanId + ")";
+          // Start Polling
+          startPolling(currentScanId);
         }
-
-        // --- OWASP/ZAP RESULTS (SORTED) ---
-        let vulnHtml = '';
-        if (data.vulnerabilities && data.vulnerabilities.length > 0) {
-          vulnHtml += `<h4 style="margin-top: 2rem; color: var(--danger); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">OWASP Top 10 Vulnerabilities</h4>`;
-          vulnHtml += `<div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">`;
-
-          data.vulnerabilities.forEach((v) => {
-            // OWASP 2021 Colors
-            const isCritical = v.severity === 'CRITICAL' || v.severity === 'HIGH';
-            const color = isCritical ? 'var(--danger)' : 'var(--primary)';
-            const bg = isCritical ? 'rgba(239, 68, 68, 0.1)' : 'rgba(88, 129, 87, 0.1)';
-
-            vulnHtml += `
-        <div style="background: ${bg}; border-left: 4px solid ${color}; padding: 1rem; border-radius: 0 4px 4px 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem;">
-              <strong style="color: ${color}; font-size: 1.1rem;">${v.owasp_code}: ${v.owasp_name}</strong>
-            </div>
-            <span style="background: ${color}; color: #000; padding: 0.2rem 0.6rem; border-radius: 12px; font-size: 0.75rem; font-weight: bold; text-transform: uppercase;">${v.severity}</span>
-          </div>
-          <p style="color: var(--text-main); font-size: 0.95rem; margin-bottom: 0.5rem;">
-            <strong style="color: var(--text-muted);">Alert:</strong> ${v.type}
-          </p>
-          <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 0.5rem;">${v.description}</p>
-          <div style="font-family: monospace; color: var(--text-muted); font-size: 0.85rem; background: rgba(0,0,0,0.2); padding: 0.5rem; border-radius: 4px;">
-            Location: ${v.location}
-          </div>
-        </div>`;
-          });
-          vulnHtml += `</div>`;
-        } else {
-          vulnHtml = `<div style="margin-top: 1rem; color: var(--primary);">✓ No obvious vulnerabilities found. System appears secure.</div>`;
-        }
-
-        resultDiv.innerHTML = `
-      <div style="display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--border); padding-bottom: 1rem;">
-        <div>
-          <div style="color: var(--primary); font-weight: 600; font-size: 1.2rem;">✓ Scan Complete</div>
-          <div style="color: var(--text-muted); margin-top: 0.2rem;">ID: ${data.scan_id} | Target: ${data.target}</div>
-        </div>
-        <div style="text-align: right;">
-          <div style="font-size: 0.9rem; color: var(--text-muted);">Risk Level</div>
-          <div style="font-weight: bold; font-size: 1.5rem; color: ${data.riskLevel === 'Critical' || data.riskLevel === 'High' ? 'var(--danger)' : 'var(--primary)'}">
-            ${data.riskLevel}
-          </div>
-        </div>
-      </div>
-
-      ${nmapHtml}
-      ${vulnHtml}
-      `;
 
       } catch (error) {
         clearInterval(timerInterval);
-        // 4. Show ERROR if backend is offline
-        resultDiv.innerHTML = `
-      <div style="color: var(--danger); font-weight: 600; margin-bottom: 0.5rem;">❌ Scan Failed</div>
-      <div style="color: var(--text-muted); margin-bottom: 1rem;">
-        Could not connect to the backend server or scan timed out.
-      </div>
-      <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); padding: 1rem; border-radius: 6px; font-size: 0.9rem;">
-        Error details: ${error.message}
-      </div>
-        `;
+        showError(error.message);
       }
+    }
+
+    function startPolling(scanId) {
+      if (pollInterval) clearInterval(pollInterval);
+      pollInterval = setInterval(() => pollStatus(scanId), 3000);
+    }
+
+    async function pollStatus(scanId) {
+      try {
+        const response = await fetch(`/api/scan/status/${scanId}`);
+        const data = await response.json();
+
+        updateUI(data);
+
+        if (data.status === 'Completed' || data.status.startsWith('Failed') || data.status.startsWith('Stopped')) {
+          clearInterval(pollInterval);
+          clearInterval(timerInterval);
+        }
+      } catch (error) {
+        console.error("Polling error:", error);
+        const statusText = document.querySelector('.pulse-text');
+        if (statusText) statusText.textContent = "⚠️ Background communication error. Retrying...";
+      }
+    }
+
+    function updateUI(data) {
+      const resultDiv = document.getElementById('result');
+
+      // Update Timer & Progress
+      const timeDisplay = document.getElementById('elapsedTime');
+      if (timeDisplay && (data.status === 'Completed' || data.status.startsWith('Stopped'))) {
+        // Keep final time
+      }
+
+      // Update Progress Bar
+      const progressBar = resultDiv.querySelector('.progress-bar-move');
+      if (progressBar) {
+        progressBar.style.width = data.progress + '%';
+        progressBar.classList.toggle('paused', data.is_paused);
+      }
+
+      const statusText = resultDiv.querySelector('.pulse-text');
+      if (statusText) statusText.textContent = `Status: ${data.status} (${data.progress}%)`;
+
+      // Update/Add Control Buttons if not already there
+      let controls = document.getElementById('scanControls');
+      if (!controls) {
+        controls = document.createElement('div');
+        controls.id = 'scanControls';
+        controls.style = 'display: flex; gap: 0.5rem; justify-content: center; margin-top: 1rem; transition: opacity 0.5s ease;';
+        resultDiv.querySelector('.pulse-container').appendChild(controls);
+      }
+
+      const isFinished = data.status === 'Completed' || data.status.startsWith('Stopped') || data.status.startsWith('Failed');
+
+      const spinner = document.getElementById('scanSpinner');
+      const progressBarWrapper = document.getElementById('progressBarWrapper');
+      const statusSubtext = document.getElementById('statusSubtext');
+      const statusHeading = document.getElementById('statusHeading');
+
+      if (isFinished) {
+        if (controls) controls.style.display = 'none';
+
+        // Transform Spinner to Checkmark or Error icon
+        if (spinner) {
+          spinner.style.animation = 'none';
+          spinner.style.border = 'none';
+          spinner.style.width = 'auto';
+          spinner.style.height = 'auto';
+          spinner.innerHTML = data.status === 'Completed' ? '✅' : '❌';
+        }
+
+        // Hide progress bar and subtext
+        if (progressBarWrapper) progressBarWrapper.style.display = 'none';
+        if (statusSubtext) statusSubtext.style.display = 'none';
+        if (statusHeading) {
+          statusHeading.classList.remove('pulse-text');
+          statusHeading.style.animation = 'none';
+        }
+
+        // Add Download Buttons if they don't exist
+        let downloadWrap = document.getElementById('downloadControls');
+        if (!downloadWrap) {
+          downloadWrap = document.createElement('div');
+          downloadWrap.id = 'downloadControls';
+          downloadWrap.style = 'margin-top: 1rem; display: flex; gap: 1rem; justify-content: center;';
+          resultDiv.querySelector('.pulse-container').appendChild(downloadWrap);
+
+          downloadWrap.innerHTML = `
+            <a href="/api/scan/download/${data.scan_id}/pdf" class="btn" style="background: var(--primary); padding: 0.6rem 1.2rem; font-size: 0.9rem; text-decoration: none; color: #000; font-weight: bold; border-radius: 4px;">📥 Download PDF</a>
+            <a href="/api/scan/download/${data.scan_id}/json" class="btn" style="background: rgba(255,255,255,0.1); border: 1px solid var(--border); padding: 0.6rem 1.2rem; font-size: 0.9rem; text-decoration: none; color: var(--text-main); border-radius: 4px;">📂 Download JSON</a>
+          `;
+        }
+      } else {
+        if (controls) {
+          controls.style.display = 'flex';
+          controls.innerHTML = `
+                <button onclick="controlScan('pause')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: ${data.is_paused ? 'rgba(255,255,255,0.1)' : 'var(--secondary)'}; border: 1px solid var(--border);" ${data.is_paused ? 'disabled' : ''}>⏸ Pause</button>
+                <button onclick="controlScan('resume')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: ${!data.is_paused ? 'rgba(255,255,255,0.1)' : 'var(--primary)'}; border: 1px solid var(--primary);" ${!data.is_paused ? 'disabled' : ''}>▶ Resume</button>
+                <button onclick="controlScan('stop')" class="btn" style="padding: 0.5rem 1rem; font-size: 0.8rem; background: #991b1b; border: 1px solid #7f1d1d;">🛑 Stop</button>
+            `;
+        }
+      }
+
+      // Render Partial Vulnerabilities
+      renderResults(data);
+    }
+
+    async function controlScan(action) {
+      if (!currentScanId) return;
+      try {
+        const response = await fetch(`/api/scan/control/${currentScanId}/${action}`, { method: 'POST' });
+        if (!response.ok) {
+          const err = await response.json();
+          console.error("Control error:", err);
+          alert("Action failed: " + (err.error || "Server error"));
+          return;
+        }
+        pollStatus(currentScanId); // Immediate refresh
+      } catch (error) {
+        console.error("Control error:", error);
+        alert("Failed to communicate with server.");
+      }
+    }
+
+    function renderResults(data) {
+      const resultDiv = document.getElementById('result');
+      // Find or create results container
+      let resContainer = document.getElementById('liveResults');
+      if (!resContainer) {
+        resContainer = document.createElement('div');
+        resContainer.id = 'liveResults';
+        resultDiv.appendChild(resContainer);
+      }
+
+      let nmapHtml = '';
+      if (data.nmap && data.nmap.length > 0) {
+        nmapHtml += `<h4 style="margin-top: 1.5rem; color: var(--secondary); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Network Discovery</h4>`;
+        nmapHtml += `<div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 1rem; margin-top: 1rem;">`;
+        data.nmap.forEach(port => {
+          nmapHtml += `<div style="background: rgba(255,255,255,0.03); padding: 0.8rem; border-radius: 4px; border: 1px solid var(--border);">
+                    <div style="color: var(--primary); font-weight: bold;">Port ${port.port}</div>
+                    <div style="color: var(--text-muted); font-size: 0.9rem;">${port.service}</div>
+                </div>`;
+        });
+        nmapHtml += `</div>`;
+      }
+
+      let vulnHtml = '';
+      if (data.vulnerabilities && data.vulnerabilities.length > 0) {
+        vulnHtml += `<h4 style="margin-top: 2rem; color: var(--danger); border-bottom: 1px solid var(--border); padding-bottom: 0.5rem;">Detected Vulnerabilities (${data.vulnerabilities.length})</h4>`;
+        vulnHtml += `<div style="margin-top: 1rem; display: flex; flex-direction: column; gap: 1rem;">`;
+        data.vulnerabilities.forEach((v) => {
+          const isHigh = v.severity === 'High' || v.severity === 'Critical' || v.severity === 'HIGH' || v.severity === 'CRITICAL';
+          const color = isHigh ? 'var(--danger)' : 'var(--primary)';
+          vulnHtml += `
+            <div style="background: rgba(255,255,255,0.02); border-left: 4px solid ${color}; padding: 1rem; border-radius: 0 4px 4px 0;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+                <strong style="color: ${color};">${v.owasp_code || 'OTH'}: ${v.owasp_name || v.type}</strong>
+                <span style="background: ${color}; color: #000; padding: 0.1rem 0.4rem; border-radius: 4px; font-size: 0.7rem; font-weight: bold;">${v.severity}</span>
+              </div>
+              <p style="color: var(--text-muted); font-size: 0.85rem;">${v.description || ''}</p>
+            </div>`;
+        });
+        vulnHtml += `</div>`;
+      }
+
+      resContainer.innerHTML = `
+            ${data.status === 'Completed' ? '<h3 style="color: var(--primary); margin-top: 2rem;">✓ Scan Finished</h3>' : ''}
+            ${nmapHtml}
+            ${vulnHtml}
+        `;
+    }
+
+    function showError(msg) {
+      const resultDiv = document.getElementById('result');
+      resultDiv.innerHTML = `<div style="color: var(--danger); padding: 1rem; background: rgba(239, 68, 68, 0.1); border-radius: 8px; border: 1px solid var(--danger);">❌ Error: ${msg}</div>`;
     }
 
     function toggleAll(checked) {
